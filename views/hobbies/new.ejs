@@ -2,32 +2,39 @@
 <div class="row">
   <h1 class="text-center">New Hobby Spot</h1>
   <div class="col-6 offset-3">
-    <form action="/hobbies" method="POST">
+
+    <form action="/hobbies" method="POST" novalidate class="validated-form">
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
-        <input class="form-control" type="text" id="title" name="hobbies[title]">
+        <input class="form-control" type="text" id="title" name="hobbies[title]" required>
+        <div class="valid-feedback">Looks good!</div>
       </div>
+
       <div class="mb-3">
         <label class="form-label" for="location">Location</label>
-        <input class="form-control" type="text" id="location" name="hobbies[location]">
+        <input class="form-control" type="text" id="location" name="hobbies[location]" required>
+        <div class="valid-feedback">Looks good!</div>
       </div>
 
       <div class="mb-3">
         <label class="form-label" for="image">Image URL</label>
-        <input class="form-control" type="text" id="location" name="hobbies[image]">
+        <input class="form-control" type="text" id="location" name="hobbies[image]" required>
+        <div class="valid-feedback">Looks good!</div>
       </div>
 
       <div class="mb3">
         <label for="price" class="form-label">Hobby Spot Price</label>
         <div class="input-group">
           <span class="input-group-text" id="price-label">$</span>
-          <input type="text" class="form-control" id="price" placeholder="0.00" name="hobbies[price]">
+          <input type="text" class="form-control" id="price" placeholder="0.00" name="hobbies[price]" required>
         </div>
+        <div class="valid-feedback">Looks good!</div>
       </div>
 
       <div class="mb-3">
         <label class="form-label" for="description">Description</label>
-        <textarea class="form-control" type="text" id="location" name="hobbies[description]"></textarea>
+        <textarea class="form-control" type="text" id="location" name="hobbies[description]" required></textarea>
+        <div class="valid-feedback">Looks good!</div>
       </div>
 
       <div class="mb-3">
@@ -40,4 +47,3 @@
     </footer>
   </div>
 </div>
-
