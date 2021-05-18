@@ -2,21 +2,21 @@
 <div class="row">
   <h1 class="text-center">Edit Hobby Spot</h1>
   <div class="col-6 offset-3">
-    <form action="/hobbies/<%=hobbies._id%>?_method=PUT" method="POST" novalidate class="validated-form">
+    <form action="/hobbies/<%=hobby._id%>?_method=PUT" method="POST" novalidate class="validated-form">
       <div class="mb-3">
         <label class="form-label" for="title">Title</label>
-        <input class="form-control" type="text" id="title" name="hobbies[title]" value="<%= hobbies.title%>" required>
+        <input class="form-control" type="text" id="title" name="hobby[title]" value="<%= hobby.title%>" required>
         <div class="valid-feedback">Looks good!</div>
       </div>
       <div class="mb-3">
         <label class="form-label" for="location">Location</label>
-        <input class="form-control" type="text" id="location" name="hobbies[location]" value="<%= hobbies.location%>" required>
+        <input class="form-control" type="text" id="location" name="hobby[location]" value="<%= hobby.location%>" required>
         <div class="valid-feedback">Looks good!</div>
       </div>
 
       <div class="mb-3">
         <label class="form-label" for="image">Image URL</label>
-        <input class="form-control" type="text" id="location" name="hobbies[image]" value="<%= hobbies.image%>" required>
+        <input class="form-control" type="text" id="location" name="hobby[image]" value="<%= hobby.image%>" required>
         <div class="valid-feedback">Looks good!</div>
       </div>
 
@@ -24,14 +24,14 @@
         <label for="price" class="form-label">Hobby Spot Price</label>
         <div class="input-group">
           <span class="input-group-text" id="price-label">$</span>
-          <input type="text" class="form-control" id="price" placeholder="0.00" name="hobbies[price]" value="<%= hobbies.price%>" required>
+          <input type="text" class="form-control" id="price" placeholder="0.00" name="hobby[price]" value="<%= hobby.price%>" required>
         </div>
         <div class="valid-feedback">Looks good!</div>
       </div>
 
       <div class="mb-3">
         <label class="form-label" for="description">Description</label>
-        <textarea class="form-control" type="text" id="location" name="hobbies[description]" required><%= hobbies.description%></textarea>
+        <textarea class="form-control" type="text" id="location" name="hobby[description]" required><%= hobby.description%></textarea>
         <div class="valid-feedback">Looks good!</div>
       </div>
 
@@ -41,7 +41,7 @@
     </form>
   
     <footer>
-      <a href="/hobbies/<%= hobbies._id %>">Back to Hobby</a>
+      <a href="/hobbies/<%= hobby._id %>">Back to Hobby</a>
     </footer>
   </div>
 </div>

@@ -1,20 +1,21 @@
 <% layout('layouts/boilerplate') %> 
 
-  <div class="row">
-    <div class="col-6 offset-3">
+<div class="row">
+  <!-- Column 1: Show Hobby -->
+    <div class="col-6">
       <div class="card mb-3">
-        <img src="<%= hobbies.image %>" class="card-img-top" alt="<%= hobbies.title %>">
+        <img src="<%= hobby.image %>" class="card-img-top" alt="<%= hobby.title %>">
         <div class="card-body">
-          <h5 class="card-title"><%= hobbies.title %></h5>
-          <p class="card-text"><%= hobbies.description %></p>
+          <h5 class="card-title"><%= hobby.title %></h5>
+          <p class="card-text"><%= hobby.description %></p>
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item text-muted"><%= hobbies.location %></li>
-          <li class="list-group-item">$<%= hobbies.price %></li>
+          <li class="list-group-item text-muted"><%= hobby.location %></li>
+          <li class="list-group-item">$<%= hobby.price %></li>
         </ul>
         <div class="card-body">
-          <a class="card-link btn btn-info" href="/hobbies/<%= hobbies._id %>/edit">Edit Hobby Spot </a>
-          <form class='d-inline' action="/hobbies/<%= hobbies._id %>?_method=DELETE" method="POST">
+          <a class="card-link btn btn-info" href="/hobbies/<%= hobby._id %>/edit">Edit Hobby Spot </a>
+          <form class='d-inline' action="/hobbies/<%= hobby._id %>?_method=DELETE" method="POST">
             <button class="btn btn-danger">Delete Hobby Spot</button>
           </form>
         </div>
@@ -23,17 +24,36 @@
           <a href="/hobbies">Back to Hobbies List</a>
         </div>
       </div>
+    </div>
+    <!-- End Column 1: Show Hobby -->
+
+    <!-- Column 2: Reviews -->
+    <div class="col-6">
       <h2>Leave a Review</h2>
-      <form action="/hobbies/<%= hobbies._id %>/reviews" method="POST" class="mb-3">
+      <form action="/hobbies/<%= hobby._id %>/reviews" method="POST" class="mb-3 validated-form" novalidate>
           <div class="mb-3">
             <label for="rating" class="form-label">Rating</label>
             <input type="range" min='1' max='5' class="form-range" name="review[rating]">
           </div>
           <div class="mb-3">
             <label class="form-label" for="body">Review</label>
-            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3"></textarea>
+            <textarea class="form-control" name="review[body]" id="body" cols="30" rows="3" required></textarea>
+            <div class="valid-feedback">Looks good!</div>
           </div>
           <button class="btn btn-success">Submit</button>
       </form>
+
+      <% for(let review of hobby.reviews) { %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title">Rating: <%= review.rating %> </h5>
+            <p class="card-text">Review: <%= review.body %> </p>
+            <form action="/hobbies/<%= hobby._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
+      <% } %>  
     </div>
-  </div>
+    <!-- End Column 2: Reviews -->
+</div>

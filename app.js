@@ -2,12 +2,12 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
-const {hobbiesSchema} = require('./schemas')
-const catchAsync = require('./helpers/catchAsync');
 const ExpressError = require('./helpers/expressError');
 const methodOverride = require('method-override');
-const Hobby = require('./models/hobby');
-const Review = require('./models/review')
+
+//Route Imports
+const hobbies = require('./routes/hobbies')
+const reviews = require('./routes/reviews')
 
 //#region Engine Related
 
@@ -36,69 +36,13 @@ app.use(methodOverride('_method'))
 
 //#endregion Engine Related
 
-//Post Validation
-const validateHobbies = (req, res, next) => {
-  const {error} = hobbiesSchema.validate(req.body)
-  if(error){
-    const msg = error.details.map(el => el.message).join(',')
-    throw new ExpressError(msg, 400)
-  } else {
-    next()
-  }
-};
-
 //Routes
+app.use('/hobbies', hobbies)
+app.use('/hobbies/:id/reviews', reviews)
+
 app.get('/', (req, res) => {
   res.render('home');
 })
-
-app.get('/hobbies', catchAsync(async (req, res) => {
-  const hobbies  = await Hobby.find({});
-  res.render('hobbies/index', { hobbies });
-}))
-
-app.get('/hobbies/new', (req, res) => {
-  res.render('hobbies/new')
-})
-
-app.post('/hobbies', validateHobbies, catchAsync(async (req, res, next) => {
-    const hobbies = new Hobby(req.body.hobbies);
-    await hobbies.save();
-    res.redirect(`/hobbies/${hobbies._id}`)
-}))
-
-app.get('/hobbies/:id', catchAsync(async (req, res) => {
-  const hobbies  = await Hobby.findById(req.params.id);
-  res.render('hobbies/show', { hobbies })
-}))
-
-app.get('/hobbies/:id/edit', catchAsync(async (req, res) => {
-  const hobbies  = await Hobby.findById(req.params.id);
-  res.render('hobbies/edit', { hobbies })
-}))
-
-//DATA MANIPULATION ROUTES
-
-app.put('/hobbies/:id', validateHobbies, catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const hobbies = await Hobby.findByIdAndUpdate(id, {...req.body.hobbies});
-  res.redirect(`/hobbies/${hobbies._id}`)
-}))
-
-app.delete('/hobbies/:id', catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const hobbies = await Hobby.findByIdAndDelete(id, {...req.body.hobbies});
-  res.redirect(`/hobbies`)
-}))
-
-app.post('/hobbies/:id/reviews', catchAsync(async (req, res) => {
-  const hobby = await Hobby.findById(req.params.id);
-  const review = new Review(req.body.review);
-  hobby.reviews.push(review);
-  await review.save();
-  await hobby.save();
-  res.redirect(`/hobbies/${hobby._id}`)
-}))
 
 //ERROR HANDLING
 app.all('*', (req, res, next) => {
