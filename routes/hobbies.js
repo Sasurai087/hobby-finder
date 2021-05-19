@@ -4,6 +4,7 @@ const catchAsync = require('../helpers/catchAsync');
 const ExpressError = require('../helpers/expressError');
 const Hobby = require('../models/hobby');
 const {hobbySchema} = require('../schemas')
+const {isLoggedIn} = require('../middleware')
 
 //Post Validation
 const validateHobby = (req, res, next) => {
@@ -23,12 +24,12 @@ router.get('/', catchAsync(async (req, res) => {
   res.render('hobbies/index', { hobby });
 }))
 
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
   res.render('hobbies/new')
 })
 
 //Posting new hobby
-router.post('/', validateHobby, catchAsync(async (req, res, next) => {
+router.post('/', isLoggedIn, validateHobby, catchAsync(async (req, res, next) => {
   req.flash('success', 'Successfully posted a new hobby spot!')  
   const hobby = new Hobby(req.body.hobby);
     await hobby.save();
@@ -45,7 +46,7 @@ router.get('/:id', catchAsync(async (req, res) => {
   res.render('hobbies/show', { hobby })
 }))
 
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
   const hobby  = await Hobby.findById(req.params.id);
   if(!hobby){
     req.flash('error', 'Cannot find the specified hobby spot.')
