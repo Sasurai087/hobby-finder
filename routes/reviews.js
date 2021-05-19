@@ -28,6 +28,7 @@ router.post('/', validateReview, catchAsync(async (req, res) => {
   hobby.reviews.push(review);
   await review.save();
   await hobby.save();
+  req.flash('success', 'Your review was successfully posted!')  
   res.redirect(`/hobbies/${hobby._id}`)
 }))
 
@@ -36,6 +37,7 @@ router.delete('/:reviewId', catchAsync(async (req, res) => {
   const {id, reviewId} = req.params;
   await Hobby.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
   await Review.findByIdAndDelete(reviewId);
+  req.flash('success', 'Your review has been deleted.')  
   res.redirect(`/hobbies/${id}`)
 }))
 
