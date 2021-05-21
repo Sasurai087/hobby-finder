@@ -27,6 +27,7 @@ const seedDB = async() => {
     const random1000 = Math.floor(Math.random() * 1000);
     const price = Math.floor(Math.random() * 20) + 10;
     const hobby = new Hobby({
+      author: '60a4aa9e1f871149383ce3f8',
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample([
         `${sample(hobbies)} ${sample(places)}`,

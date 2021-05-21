@@ -1,75 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const catchAsync = require('../helpers/catchAsync');
-const ExpressError = require('../helpers/expressError');
-const Hobby = require('../models/hobby');
-const {hobbySchema} = require('../schemas')
-const {isLoggedIn} = require('../middleware')
-
-//Post Validation
-const validateHobby = (req, res, next) => {
-  const {error} = hobbySchema.validate(req.body)
-  if(error){
-    const msg = error.details.map(el => el.message).join(',')
-    throw new ExpressError(msg, 400)
-  } else {
-    next()
-  }
-};
-
+const {isLoggedIn, isAuthor, validateHobby} = require('../middleware')
+const hobbyControl = require('../controllers/hobby');
 
 //ROUTES
-router.get('/', catchAsync(async (req, res) => {
-  const hobby  = await Hobby.find({});
-  res.render('hobbies/index', { hobby });
-}))
+router.route('/')
+  .get(catchAsync(hobbyControl.index))
+  .post(isLoggedIn, validateHobby, catchAsync(hobbyControl.createHobby))
 
-router.get('/new', isLoggedIn, (req, res) => {
-  res.render('hobbies/new')
-})
+router.get('/new', isLoggedIn, hobbyControl.renderNewForm)
 
-//Posting new hobby
-router.post('/', isLoggedIn, validateHobby, catchAsync(async (req, res, next) => {
-  req.flash('success', 'Successfully posted a new hobby spot!')  
-  const hobby = new Hobby(req.body.hobby);
-    await hobby.save();
-    res.redirect(`hobbies/${hobby._id}`)
-}))
+router.route('/:id')
+  .get(catchAsync(hobbyControl.showHobby))
+  .put(isLoggedIn, isAuthor, validateHobby, catchAsync(hobbyControl.updateHobby))
+  .delete(isLoggedIn, isAuthor, catchAsync(hobbyControl.deleteHobby))
 
-//SHOW Page
-router.get('/:id', catchAsync(async (req, res) => {
-  const hobby  = await Hobby.findById(req.params.id).populate('reviews');
-  if(!hobby){
-    req.flash('error', 'Cannot find the specified hobby spot.')
-    return res.redirect('/hobbies')
-  }
-  res.render('hobbies/show', { hobby })
-}))
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(hobbyControl.renderEditForm))
 
-router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
-  const hobby  = await Hobby.findById(req.params.id);
-  if(!hobby){
-    req.flash('error', 'Cannot find the specified hobby spot.')
-    return res.redirect('/hobbies')
-  }
-  res.render('hobbies/edit', { hobby })
-}))
-
-//DATA MANIPULATION ROUTES
-//Edit Route
-router.put('/:id', validateHobby, catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const hobby = await Hobby.findByIdAndUpdate(id, {...req.body.hobby});
-  req.flash('success', 'Successfully updated hobby spot')  
-  res.redirect(`/hobbies/${hobby._id}`)
-}))
-
-//Delete Route
-router.delete('/:id', catchAsync(async (req, res) => {
-  const {id} = req.params;
-  const hobby = await Hobby.findByIdAndDelete(id, {...req.body.hobby});
-  req.flash('success', 'Successfully removed the hobby spot')  
-  res.redirect(`/hobbies`)
-}))
 
 module.exports = router;
