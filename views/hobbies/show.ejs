@@ -5,7 +5,9 @@
   <!-- Column 1: Show Hobby -->
     <div class="col-6">
       <div class="card mb-3">
-        <img src="<%= hobby.image %>" class="card-img-top" alt="<%= hobby.title %>">
+        <% for( let img of hobby.images ) { %>
+          <img src="<%= img.url %>" class="card-img-top" alt="<%= hobby.title %>">
+        <% } %>
         <div class="card-body">
           <h5 class="card-title"><%= hobby.title %></h5>
           <p class="card-text"><%= hobby.description %></p>

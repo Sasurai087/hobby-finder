@@ -11,8 +11,10 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createHobby = async (req, res, next) => {
   const hobby = new Hobby(req.body.hobby);
+  hobby.images = req.files.map(file => ({url: file.path, filename: file.filename}));
   hobby.author = req.user._id;
   await hobby.save();
+  console.log(hobby)
   req.flash('success', 'Successfully posted a new hobby spot!') 
   res.redirect(`hobbies/${hobby._id}`)
   }

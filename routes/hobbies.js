@@ -3,11 +3,15 @@ const router = express.Router();
 const catchAsync = require('../helpers/catchAsync');
 const {isLoggedIn, isAuthor, validateHobby} = require('../middleware')
 const hobbyControl = require('../controllers/hobby');
+const multer = require('multer');
+const {storage} = require('../cloudinary')
+const upload = multer({storage});
+
 
 //ROUTES
 router.route('/')
   .get(catchAsync(hobbyControl.index))
-  .post(isLoggedIn, validateHobby, catchAsync(hobbyControl.createHobby))
+  .post(isLoggedIn, upload.array('image'), validateHobby, catchAsync(hobbyControl.createHobby))
 
 router.get('/new', isLoggedIn, hobbyControl.renderNewForm)
 
