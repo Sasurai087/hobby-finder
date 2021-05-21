@@ -1,4 +1,5 @@
 const Hobby = require('../models/hobby');
+const {cloudinary} = require('../cloudinary');
 
 module.exports.index = (async (req, res) => {
   const hobby  = await Hobby.find({});
@@ -48,6 +49,12 @@ module.exports.createHobby = async (req, res, next) => {
     const newImages = req.files.map(file => ({url: file.path, filename: file.filename}));
     hobby.images.push(...newImages)
     await hobby.save()
+    if(req.body.deleteImages){
+      for(let filename of req.body.deleteImages){
+        await cloudinary.uploader.destroy(filename)
+      }
+      await hobby.updateOne({$pull: {images: {filename: {$in: req.body.deleteImages }}}})
+    }
     req.flash('success', 'Successfully updated hobby spot')  
     res.redirect(`/hobbies/${hobby._id}`)
   }
