@@ -3,7 +3,7 @@ const cities = require('./cities')
 const {places, hobbies, descriptors} = require('./seedHelpers')
 const Hobby = require('../models/hobby');
 
-
+// Unsplash Hobby Collection = 'https://source.unsplash.com/collection/4959235/'
 
 //Initialize mongoose
 mongoose.connect('mongodb://localhost:27017/hobbyfinder', {
@@ -34,7 +34,16 @@ const seedDB = async() => {
         `${sample(descriptors)} ${sample(hobbies)}s`,
         `${cities[random1000].city} ${sample(hobbies)}s`,
       ])}`,
-      image: 'https://source.unsplash.com/collection/4959235/',
+      images: [
+        {
+          url: 'https://res.cloudinary.com/sasurai/image/upload/v1621622719/HobbyFinder/iqb6gx0oifgonhv8zj7t.jpg',
+          filename: 'HobbyFinder/iqb6gx0oifgonhv8zj7t'
+        },
+        {
+          url: 'https://res.cloudinary.com/sasurai/image/upload/v1621622718/HobbyFinder/vka881erekf3av750dzh.jpg',
+          filename: 'HobbyFinder/vka881erekf3av750dzh'
+        },
+      ],
       description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga reprehenderit modi consectetur quidem alias tempora repudiandae natus mollitia quo vitae, sit rem perferendis ea dolore similique sunt iure tempore quibusdam!",
       price
     })

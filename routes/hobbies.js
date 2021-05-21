@@ -17,7 +17,7 @@ router.get('/new', isLoggedIn, hobbyControl.renderNewForm)
 
 router.route('/:id')
   .get(catchAsync(hobbyControl.showHobby))
-  .put(isLoggedIn, isAuthor, validateHobby, catchAsync(hobbyControl.updateHobby))
+  .put(isLoggedIn, isAuthor, upload.array('image'), validateHobby, catchAsync(hobbyControl.updateHobby))
   .delete(isLoggedIn, isAuthor, catchAsync(hobbyControl.deleteHobby))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(hobbyControl.renderEditForm))

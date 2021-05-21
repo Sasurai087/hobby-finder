@@ -45,6 +45,9 @@ module.exports.createHobby = async (req, res, next) => {
   module.exports.updateHobby = async (req, res) => {
     const {id} = req.params;
     const hobby = await Hobby.findByIdAndUpdate(id, {...req.body.hobby});
+    const newImages = req.files.map(file => ({url: file.path, filename: file.filename}));
+    hobby.images.push(...newImages)
+    await hobby.save()
     req.flash('success', 'Successfully updated hobby spot')  
     res.redirect(`/hobbies/${hobby._id}`)
   }
