@@ -4,6 +4,9 @@
 <div class="row">
   <!-- Column 1: Show Hobby -->
     <div class="col-6">
+      <!-- Map -->
+      <div id='map' style='width: 400px; height: 300px;'></div>
+
       <!-- Carousel -->
       <div id="hobbyCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -100,3 +103,10 @@
     </div>
     <!-- End Column 2: Reviews -->
 </div>
+
+<script>
+  const mapToken = '<%-process.env.MAPBOX_TOKEN%>'
+  const hobby = <%- JSON.stringify(hobby) %>
+</script>
+
+<script src='/js/showPageMap.js'></script>

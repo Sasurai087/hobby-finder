@@ -34,6 +34,13 @@ const seedDB = async() => {
         `${sample(descriptors)} ${sample(hobbies)}s`,
         `${cities[random1000].city} ${sample(hobbies)}s`,
       ])}`,
+      geometry: {
+        type: "Point",
+        coordinates: [
+            cities[random1000].longitude,
+            cities[random1000].latitude,
+        ]
+    },
       images: [
         {
           url: 'https://res.cloudinary.com/sasurai/image/upload/v1621622719/HobbyFinder/iqb6gx0oifgonhv8zj7t.jpg',

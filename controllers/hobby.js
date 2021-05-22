@@ -1,5 +1,8 @@
 const Hobby = require('../models/hobby');
 const {cloudinary} = require('../cloudinary');
+const mapboxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapboxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mapboxGeocoding({accessToken: mapboxToken})
 
 module.exports.index = (async (req, res) => {
   const hobby  = await Hobby.find({});
@@ -11,11 +14,15 @@ module.exports.renderNewForm = (req, res) => {
 }
 
 module.exports.createHobby = async (req, res, next) => {
+  const geoData = await geocoder.forwardGeocode({
+    query: req.body.hobby.location,
+    limit: 1
+  }).send();
   const hobby = new Hobby(req.body.hobby);
+  hobby.geometry = geoData.body.features[0].geometry;
   hobby.images = req.files.map(file => ({url: file.path, filename: file.filename}));
   hobby.author = req.user._id;
   await hobby.save();
-  console.log(hobby)
   req.flash('success', 'Successfully posted a new hobby spot!') 
   res.redirect(`hobbies/${hobby._id}`)
   }
