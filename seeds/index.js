@@ -23,7 +23,7 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async() => {
   await Hobby.deleteMany({});
-  for(let i=0; i < 50; i++){
+  for(let i=0; i < 100; i++){
     const random1000 = Math.floor(Math.random() * 1000);
     const price = Math.floor(Math.random() * 20) + 10;
     const hobby = new Hobby({
@@ -31,8 +31,8 @@ const seedDB = async() => {
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample([
         `${sample(hobbies)} ${sample(places)}`,
-        `${sample(descriptors)} ${sample(hobbies)}s`,
-        `${cities[random1000].city} ${sample(hobbies)}s`,
+        `${sample(descriptors)} ${sample(hobbies)}`,
+        `${cities[random1000].city} ${sample(hobbies)}`,
       ])}`,
       geometry: {
         type: "Point",

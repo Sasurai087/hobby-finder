@@ -16,7 +16,31 @@ module.exports.hobbies = [
     'Ship',
     'Drone',
     'Tank',
-    'Art'
+    'Art',
+    'Airbrushing',
+    '3D Printing',
+    'Animation',
+    'Beatboxing',
+    'Beer Tasting',
+    'Scupting',
+    'Scuba Diving',
+    'Scrapbooking',
+    'Ceramics',
+    'Caligraphy',
+    'Craft',
+    'Cosplaying',
+    'Mechanics',
+    'Karaoke',
+    'Martial Arts',
+    'Mazes',
+    'Ice Skating',
+    'Skating',
+    'Electronics',
+    'Gunsmithing',
+    'Swordfighting',
+    'Powerlifting',
+    'Robotics',
+    'Cybernetics'
 ]
 
 module.exports.places = [

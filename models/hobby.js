@@ -11,6 +11,9 @@ ImageSchema.virtual('thumbnail').get(function() {
   return this.url.replace('/upload', '/upload/w_200')
 })
 
+//This lets mongoose pass virtuals into results that are visible on dev console
+const opts = { toJSON: {virtuals: true}};
+
 const HobbySchema = new Schema ({
   title: String,
   images: [ImageSchema],
@@ -37,7 +40,14 @@ const HobbySchema = new Schema ({
       type: Schema.Types.ObjectId,
       ref: 'Review'
     }
-  ]
+  ],
+}, opts)
+
+HobbySchema.virtual('properties.popUpMarkup').get(function() {
+  return `
+  <strong><a href="/hobbies/${this._id}">${this.title}</a></strong>
+  <p>${this.description.substring(0,100)}...</p>
+  `
 })
 
 HobbySchema.post('findOneAndDelete', async function(doc) {
