@@ -4,9 +4,6 @@
 <div class="row">
   <!-- Column 1: Show Hobby -->
     <div class="col-6">
-      <!-- Map -->
-      <div id='map' style='width: 400px; height: 300px;'></div>
-
       <!-- Carousel -->
       <div id="hobbyCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
@@ -57,6 +54,9 @@
 
     <!-- Column 2: Reviews -->
     <div class="col-6">
+      <!-- Map -->
+      <div id='map'></div>
+
       <% if(currentUser) { %> 
         <h2>Leave a Review</h2>
         <form action="/hobbies/<%= hobby._id %>/reviews" method="POST" class="mb-3 validated-form" novalidate>
