@@ -22,7 +22,7 @@ const userRoutes = require('./routes/users')
 const hobbiesRoutes = require('./routes/hobbies')
 const reviewsRoutes = require('./routes/reviews');
 
-const dbUrl = 'mongodb://localhost:27017/hobbyfinder';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/hobbyfinder';
 
 //#region Engine Related
 // Local Host: 'mongodb://localhost:27017/hobbyfinder'
@@ -52,10 +52,11 @@ app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(mongoSanitize({replaceWith: '_'}))
 
+const secret = process.env.SECRET || 'thisisabigsecret'
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   crypto: {
-    secret: 'chocolateber'
+    secret
   },
   touchAfter: 24 * 60 * 60,
 })
@@ -67,7 +68,7 @@ store.on("error", function(e) {
 const sessionConfig = {
   store,
   name: 'instance',
-  secret: 'chocolateber',
+  secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
