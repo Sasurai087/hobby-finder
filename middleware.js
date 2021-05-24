@@ -1,5 +1,5 @@
 const { hobbySchema, reviewSchema } = require('./schemas.js');
-const ExpressError = require('./helpers/ExpressError');
+const expressError = require('./helpers/expressError');
 const Hobby = require('./models/hobby');
 const Review = require('./models/review');
 
@@ -37,7 +37,7 @@ module.exports.validateHobby = (req, res, next) => {
   const {error} = hobbySchema.validate(req.body)
   if(error){
     const msg = error.details.map(el => el.message).join(',')
-    throw new ExpressError(msg, 400)
+    throw new expressError(msg, 400)
   } else {
     next()
   }
@@ -47,7 +47,7 @@ module.exports.validateReview = (req, res, next) => {
   const {error} = reviewSchema.validate(req.body)
   if(error){
     const msg = error.details.map(el => el.message).join(',')
-    throw new ExpressError(msg, 400)
+    throw new expressError(msg, 400)
   } else {
     next()
   }

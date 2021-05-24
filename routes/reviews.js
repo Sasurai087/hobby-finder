@@ -2,7 +2,7 @@ const express = require('express');
 //set Router{mergeParams} to true to obtain params(id) from hobbies route
 const router = express.Router({mergeParams: true});
 const catchAsync = require('../helpers/catchAsync');
-const ExpressError = require('../helpers/expressError');
+const expressError = require('../helpers/expressError');
 const {validateReview, isLoggedIn, isReviewAuthor} = require('../middleware');
 const reviewControl = require('../controllers/reviews')
 
