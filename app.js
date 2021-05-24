@@ -7,6 +7,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')
 const flash = require('connect-flash');
 const ExpressError = require('./helpers/expressError');
 const methodOverride = require('method-override');
@@ -19,12 +20,15 @@ const helmet = require('helmet');
 //Route Imports
 const userRoutes = require('./routes/users')
 const hobbiesRoutes = require('./routes/hobbies')
-const reviewsRoutes = require('./routes/reviews')
+const reviewsRoutes = require('./routes/reviews');
+
+const dbUrl = 'mongodb://localhost:27017/hobbyfinder';
 
 //#region Engine Related
+// Local Host: 'mongodb://localhost:27017/hobbyfinder'
 
 //Initialize mongoose
-mongoose.connect('mongodb://localhost:27017/hobbyfinder', {
+mongoose.connect(dbUrl, {
   useNewUrlParser: true, 
   useFindAndModify: false,
   useCreateIndex: true, 
@@ -48,8 +52,20 @@ app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(mongoSanitize({replaceWith: '_'}))
 
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  crypto: {
+    secret: 'chocolateber'
+  },
+  touchAfter: 24 * 60 * 60,
+})
+
+store.on("error", function(e) {
+  console.log("SESSION STORE ERROR", e)
+})
 
 const sessionConfig = {
+  store,
   name: 'instance',
   secret: 'chocolateber',
   resave: false,
@@ -148,6 +164,7 @@ app.use((err, req, res, next) => {
 })
 
 //Server Port
-app.listen(3000, () => {
-  console.log('Serving on port 3000')
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Serving on port ${port}`)
 })

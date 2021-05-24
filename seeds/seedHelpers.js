@@ -90,3 +90,7 @@ module.exports.descriptors = [
     'Amazing',
     'Stellar'
 ]
+
+module.exports.images = [
+    
+]
