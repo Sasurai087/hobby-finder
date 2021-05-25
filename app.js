@@ -9,7 +9,7 @@ const ejsMate = require('ejs-mate');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')
 const flash = require('connect-flash');
-const expressError = require('./helpers/expressError');
+const errorHandler = require('./helpers/errorHandler');
 const methodOverride = require('method-override');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -154,7 +154,7 @@ app.get('/', (req, res) => {
 
 //ERROR HANDLING
 app.all('*', (req, res, next) => {
-  next(new expressError('Page Not Found', 404))
+  next(new errorHandler('Page Not Found', 404))
 });
 
 //Any errors passed via next() goes to the handler below 
