@@ -6,6 +6,8 @@ const geocoder = mapboxGeocoding({accessToken: mapboxToken})
 
 module.exports.index = (async (req, res) => {
   const hobby  = await Hobby.find({});
+  console.log(hobby[0])
+  
   res.render('hobbies/index', { hobby });
 })
 
