@@ -5,7 +5,7 @@ const Hobby = require('../models/hobby');
 const faker = require('faker');
 
 //Initialize mongoose
-mongoose.connect('mongodb+srv://Sasurai087:y3hkaBTS35xr82@sasuraicluster.ebj86.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+mongoose.connect('mongodb://localhost:27017/hobbyfinder', {
   useNewUrlParser: true, 
   useCreateIndex: true, 
   useUnifiedTopology: true
