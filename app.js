@@ -22,8 +22,8 @@ const userRoutes = require('./routes/users')
 const hobbiesRoutes = require('./routes/hobbies')
 const reviewsRoutes = require('./routes/reviews');
 
-// const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/hobbyfinder';
-const dbUrl = 'mongodb://localhost:27017/hobbyfinder';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/hobbyfinder';
+// const dbUrl = 'mongodb://localhost:27017/hobbyfinder';
 
 //#region Engine Related
 // Local Host: 'mongodb://localhost:27017/hobbyfinder'

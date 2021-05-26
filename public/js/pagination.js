@@ -12,8 +12,6 @@ paginate.addEventListener('click', function(e) {
       }
       let {nextPage} = data;
       this.href = this.href.replace(/page=\d+/, `page=${nextPage}`);
-      hobbies.features.push(...data.docs);
-      map.getSource('hobby').setData(hobbies);
     })
     .catch(err => console.log('Error', err))
 })

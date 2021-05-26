@@ -5,7 +5,7 @@ const Hobby = require('../models/hobby');
 const faker = require('faker');
 
 //Initialize mongoose
-mongoose.connect('mongodb://localhost:27017/hobbyfinder', {
+mongoose.connect('mongodb+srv://Sasurai087:y3hkaBTS35xr82@sasuraicluster.ebj86.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
   useNewUrlParser: true, 
   useCreateIndex: true, 
   useUnifiedTopology: true
@@ -22,15 +22,12 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async() => {
   await Hobby.deleteMany({});
-  for(let i=0; i < 20; i++){
+  for(let i=0; i < 50; i++){
     const random1000 = Math.floor(Math.random() * 1000);
     const price = Math.floor(Math.random() * 5) + 1;
     const randomDesc = faker.commerce.productDescription()
-    // const randomDescription = faker.product.productDescription();
     const hobby = new Hobby({
-      author: '60a4aa9e1f871149383ce3f8',
-      // sample(authors)
-      // 60a4aa9e1f871149383ce3f8
+      author: `${sample(authors)}`,
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample([
         `${sample(hobbies)} ${sample(places)}`,

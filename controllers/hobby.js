@@ -3,16 +3,16 @@ const {cloudinary} = require('../cloudinary');
 const mapboxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapboxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mapboxGeocoding({accessToken: mapboxToken});
-const locus = require('locus');
 
 module.exports.index = (async (req, res) => {
+  const hobbyMap = await Hobby.find({});
   if (!req.query.page){
     const hobby = await Hobby.paginate({}, {
       populate: {
         path: 'popUpText'
       }
     });
-    res.render('hobbies/index', { hobby });
+    res.render('hobbies/index', { hobby, hobbyMap });
   } else {
     const {page} = req.query;
     const hobby = await Hobby.paginate({}, {
