@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const cities = require('./cities')
 const {places, hobbies, descriptors, images} = require('./seedHelpers')
 const Hobby = require('../models/hobby');
+const faker = require('faker');
 
 //Initialize mongoose
 mongoose.connect('mongodb://localhost:27017/hobbyfinder', {
@@ -21,9 +22,11 @@ const sample = (array) => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async() => {
   await Hobby.deleteMany({});
-  for(let i=0; i < 100; i++){
+  for(let i=0; i < 10; i++){
     const random1000 = Math.floor(Math.random() * 1000);
-    const price = Math.floor(Math.random() * 20) + 10;
+    const price = Math.floor(Math.random() * 5) + 1;
+    const randomDesc = faker.commerce.productDescription()
+    // const randomDescription = faker.product.productDescription();
     const hobby = new Hobby({
       author: '60a4aa9e1f871149383ce3f8',
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
@@ -42,10 +45,9 @@ const seedDB = async() => {
       images: [
         sample(images)
       ],
-      description: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga reprehenderit modi consectetur quidem alias tempora repudiandae natus mollitia quo vitae, sit rem perferendis ea dolore similique sunt iure tempore quibusdam!",
+      description: randomDesc,
       price
     })
-    console.log(hobby)
     await hobby.save();
   }
 }
@@ -53,8 +55,3 @@ const seedDB = async() => {
 seedDB().then(() => {
   mongoose.connection.close();
 });
-
-// {
-//   url: 'https://res.cloudinary.com/sasurai/image/upload/v1621622719/HobbyFinder/iqb6gx0oifgonhv8zj7t.jpg',
-//   filename: 'HobbyFinder/iqb6gx0oifgonhv8zj7t'
-// },

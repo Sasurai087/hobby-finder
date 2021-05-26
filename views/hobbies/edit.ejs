@@ -16,10 +16,11 @@
       </div>
 
       <div class="mb3">
-        <label for="price" class="form-label">Hobby Spot Price</label>
+        <label for="price" class="form-label">Hobby Spot Price (Left = Inexpensive; Right = Expensive)</label>
         <div class="input-group">
-          <span class="input-group-text" id="price-label">$</span>
-          <input type="text" class="form-control" id="price" placeholder="0.00" name="hobby[price]" value="<%= hobby.price%>" required>
+          <!-- <span class="input-group-text" id="price-label">$</span>
+          <input type="text" class="form-control" id="price" placeholder="0.00" name="hobby[price]" required> -->
+          <input type="range" class="form-range" min="0" max="5" id="price" name="hobby[price]" required>
         </div>
         <div class="valid-feedback">Looks good!</div>
       </div>

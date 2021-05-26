@@ -28,7 +28,7 @@ const Joi = BaseJoi.extend(extension)
 module.exports.hobbySchema = Joi.object({
   hobby: Joi.object({
     title: Joi.string().required(),
-    price: Joi.number().required().min(0),
+    price: Joi.number().required().min(1).max(5),
     location: Joi.string().required(),
     description: Joi.string().required(),
   }).required(),

@@ -79,6 +79,10 @@ module.exports.descriptors = [
     'Stellar'
 ]
 
+module.exports.authors = [
+    
+]
+
 module.exports.images = [
     {
         url: 'https://res.cloudinary.com/sasurai/image/upload/v1621977276/HobbyFinder/Trains_1_pvsff8.jpg',

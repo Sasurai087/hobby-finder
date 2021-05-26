@@ -1,5 +1,6 @@
 <% layout('layouts/boilerplate') %> 
 <link rel="stylesheet" href="/css/stars.css">
+<% console.log(hobby) %> 
 
 <div class="row">
   <!-- Column 1: Show Hobby -->
@@ -12,7 +13,6 @@
             <img src="<%= img.url %>" class="d-block w-100" alt=""">
           </div>
           <% }) %>
-
         </div>
         <% if (hobby.images.length > 1) { %>
           <button class="carousel-control-prev" type="button" data-bs-target="#hobbyCarousel" data-bs-slide="prev">
@@ -34,7 +34,14 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item text-muted"><%= hobby.location %></li>
           <li class="list-group-item">Submitted by <%= hobby.author.username %></li>
-          <li class="list-group-item">$<%= hobby.price %></li>
+          <li class="list-group-item">
+            <div class='price-wrapper'>
+              Price Range: 
+              <% for( let i = 0; i < hobby.price; i++ ) { %>
+                  <strong><div class='price-icon'>$</div></strong>
+              <% } %>
+           </div>
+          </li>
         </ul>
 
         <% if(currentUser && hobby.author.equals(currentUser._id)) {%> 
