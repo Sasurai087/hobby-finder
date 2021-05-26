@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Review = require('./review')
 const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const ImageSchema = new Schema({
   url: String,
@@ -59,6 +60,8 @@ HobbySchema.post('findOneAndDelete', async function(doc) {
     })
   }
 })
+
+HobbySchema.plugin(mongoosePaginate)
 
 //mongoose.model('Name that Schema will be called', Schema class to be used from this file)
 module.exports = mongoose.model('Hobby', HobbySchema)

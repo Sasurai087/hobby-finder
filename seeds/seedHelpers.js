@@ -24,10 +24,10 @@ module.exports.hobbies = [
     'Scrapbooking',
     'Caligraphy',
     'Craft',
-    'Mechanics',
+    'Mechanic',
     'Karaoke',
-    'Martial Arts',
-    'Mazes',
+    'Martial Art',
+    'Maze',
     'Escape Room'
 ]
 
@@ -80,7 +80,12 @@ module.exports.descriptors = [
 ]
 
 module.exports.authors = [
-    
+    '60ac19c7865d3610b4ed3c07',
+    '60ad94b8cf4cf3227caa8aea',
+    '60ad952fcf4cf3227caa8aeb',
+    '60ad955bcf4cf3227caa8aec',
+    '60ad9574cf4cf3227caa8aed',
+    '60ad9591cf4cf3227caa8aee'
 ]
 
 module.exports.images = [
